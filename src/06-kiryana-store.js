@@ -51,21 +51,43 @@
  *   formatBill([{name:"Atta",price:40,qty:2}]) // => "Atta x 2 = Rs.80"
  */
 export function getItemNames(items) {
+  if (!Array.isArray(items)) return [];
+  return items.map((val) => val.name);
   // Your code here
 }
 
 export function getAffordableItems(items, maxPrice) {
+  if (!Array.isArray(items) || typeof maxPrice !== "number") return [];
+  return items.filter((val) => val.price <= maxPrice);
   // Your code here
 }
 
 export function calculateTotal(items) {
+  if (!Array.isArray(items) || items.length <= 0) return 0;
+  return items.reduce((acc, curr) => {
+    acc += curr.qty * curr.price;
+    return acc;
+  }, 0);
   // Your code here
 }
 
 export function sortByPrice(items, ascending) {
+  if (!Array.isArray(items)) return [];
+  const originalArr=[...items]
+  const sortedArray = originalArr.sort((a, b) =>
+    ascending ? a.price - b.price : b.price - a.price,
+  );
+  return sortedArray;
   // Your code here
 }
 
 export function formatBill(items) {
+  if (!Array.isArray(items) || items.length <= 0) return "";
+  const newArr = items
+    .map((val) => {
+      return `${val.name} x ${val.qty} = Rs.${val.price * val.qty}`;
+    })
+    .join("\n");
+  return newArr;
   // Your code here
 }
